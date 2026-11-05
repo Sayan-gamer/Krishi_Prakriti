@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishi Prakriti</title>
+    <style>
+        /* Base & Reset */
+        :root {
+            --primary: #2e7d32; 
+            --primary-light: #60ad5e;
+            --dark: #1b5e20;
+            --text: #333;
+            --bg: #f9fbf9;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        
+        /* Navbar */
+        nav { background: #fff; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        nav h1 { color: var(--primary); font-size: 1.8rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 800; }
+        
+        /* 1. Hero Image Slider */
+        .slider-container { position: relative; width: 100%; height: 75vh; overflow: hidden; background: #000; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; text-align: center; color: white; background-size: cover; background-position: center; }
+        .slide.active { opacity: 1; z-index: 1; }
+        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: -1; }
+        .slide-content { z-index: 2; padding: 0 20px; }
+        .slide-content h2 { font-size: 3.5rem; margin-bottom: 10px; font-weight: 700; text-transform: capitalize; }
+        .slide-content p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
+        
+        /* Slider Navigation Arrows */
+        .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.3); color: white; border: none; font-size: 2rem; padding: 15px 20px; cursor: pointer; z-index: 10; transition: 0.3s; user-select: none; }
+        .slider-arrow:hover { background: var(--primary); }
+        .arrow-prev { left: 0; border-radius: 0 5px 5px 0; }
+        .arrow-next { right: 0; border-radius: 5px 0 0 5px; }
+
+        /* Slider Navigation Dots */
+        .slider-nav { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; gap: 12px; }
+        .dot { width: 14px; height: 14px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; transition: background 0.3s; }
+        .dot.active, .dot:hover { background: var(--primary-light); }
+
+        /* 2. Services Tabs Section (AWD) */
+        .services-section { padding: 5rem 5%; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .section-title { font-size: 2.5rem; color: var(--dark); margin-bottom: 2.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .tab-btn { padding: 12px 24px; border: none; background: #e0e0e0; color: #333; font-size: 1.1rem; cursor: pointer; border-radius: 30px; transition: 0.3s; font-weight: 600; }
+        .tab-btn.active, .tab-btn:hover { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3); }
+        
+        .tab-content { display: none; background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.06); text-align: left; animation: fadeIn 0.4s ease-in; }
+        .tab-content.active { display: block; }
+        .tab-content h3 { color: var(--primary); font-size: 1.8rem; margin-bottom: 15px; }
+        .tab-content p { font-size: 1.1rem; color: #555; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* 3. App Showcase Section */
+        .app-section { background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%); color: white; padding: 5rem 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 3rem; }
+        .app-text { flex: 1; min-width: 300px; max-width: 600px; }
+        .app-text h2 { font-size: 2.8rem; margin-bottom: 1.2rem; line-height: 1.2; }
+        .app-text p { font-size: 1.1rem; margin-bottom: 2rem; color: #e8f5e9; }
+        
+        .app-features { list-style: none; margin-bottom: 2.5rem; }
+        .app-features li { margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 12px; font-size: 1.05rem; }
+        .app-features li::before { content: '✓'; color: #81c784; font-weight: bold; font-size: 1.3rem; }
+        
+        .download-btn { display: inline-block; padding: 14px 35px; background: white; color: var(--primary); text-decoration: none; font-weight: bold; border-radius: 30px; transition: all 0.3s; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .download-btn:hover { background: #e8f5e9; transform: translateY(-3px); }
+        
+        /* CSS Phone Mockup */
+        .app-visual { flex: 1; min-width: 300px; display: flex; justify-content: center; }
+        .phone-mockup { width: 280px; height: 560px; background: #111; border-radius: 40px; border: 14px solid #222; position: relative; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 25px; background: #222; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 10; }
+        .phone-screen { width: 100%; height: 100%; background: #f4f6f4; color: #333; padding: 40px 20px 20px; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        
+        /* Mockup UI Elements */
+        .mock-header { font-weight: bold; color: var(--primary); margin-bottom: 30px; font-size: 1.4rem; letter-spacing: 1px; }
+        .mock-camera-view { background: #e0e0e0; height: 220px; border-radius: 10px; position: relative; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .mock-leaf { width: 120px; height: 120px; background: var(--primary-light); border-radius: 50% 0 50% 50%; transform: rotate(15deg); }
+        .bounding-box { width: 100px; height: 100px; border: 2px dashed #d32f2f; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(211, 47, 47, 0.1); }
+        .mock-result { background: #ffebee; color: #c62828; padding: 15px; border-radius: 8px; font-size: 0.95rem; border-left: 4px solid #c62828; }
+        
+        /* Footer */
+        footer { text-align: center; padding: 2rem; background: #111; color: #aaa; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1>Krishi Prakriti</h1>
+    </nav>
+
+    <!-- 1. Slider Section -->
+    <section class="slider-container">
+        <!-- Stock placeholders for AgTech -->
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1920');">
+            <div class="slide-content">
+                <h2>Innovating Agriculture</h2>
+                <p>Delivering state-of-the-art web and mobile solutions to modernize farming practices across the nation.</p>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=1920');">
+            <div class="slide-content">
+                <h2>Data-Driven Insights</h2>
+                <p>Bringing precision technology and scalable backends directly to the agricultural sector.</p>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1592982537447-6f2a6a0c5c79?q=80&w=1920');">
+            <div class="slide-content">
+                <h2>AI at the Edge</h2>
+                <p>Deploying advanced computer vision models for instant, on-device agricultural analytics.</p>
+            </div>
+        </div>
+        
+        <!-- NEW SLIDE: AWD & West Bengal -->
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1920');">
+            <div class="slide-content">
+                <h2>Empowering West Bengal</h2>
+                <p>Pioneering Alternate Wetting and Drying (AWD) techniques to optimize water usage and boost rice yields across India's agricultural heartlands.</p>
+            </div>
+        </div>
+        
+        <!-- Navigation Arrows -->
+        <button class="slider-arrow arrow-prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="slider-arrow arrow-next" onclick="changeSlide(1)">&#10095;</button>
+
+        <!-- Navigation Dots -->
+        <div class="slider-nav">
+            <span class="dot active" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <!-- NEW DOT FOR AWD SLIDE -->
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </section>
+
+    <!-- 2. Services Tabs Section -->
+    <section class="services-section" id="services">
+        <h2 class="section-title">Our AWD Services</h2>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'app-dev')">App Development</button>
+            <button class="tab-btn" onclick="openTab(event, 'web-dev')">Web Development</button>
+            <button class="tab-btn" onclick="openTab(event, 'ai-cv')">AI & Computer Vision</button>
+        </div>
+
+        <div id="app-dev" class="tab-content active">
+            <h3>Custom Mobile Applications</h3>
+            <p>We build robust, lightweight Android applications tailored specifically for agricultural environments. From local farm management tools to heavy-duty scanning utilities, our apps feature multi-language interfaces designed to perform flawlessly even in low-connectivity rural areas.</p>
+        </div>
+        <div id="web-dev" class="tab-content">
+            <h3>Full-Stack Web Platforms</h3>
+            <p>Our team develops high-performance dashboards, scalable databases, and GIS-integrated mapping solutions. We craft responsive web platforms capable of tracking real-time logistics, organizing vast agricultural datasets, and connecting farming ecosystems securely.</p>
+        </div>
+        <div id="ai-cv" class="tab-content">
+            <h3>Computer Vision Models</h3>
+            <p>We integrate machine learning directly into your digital workflow. Utilizing modern segmentation and detection frameworks, we generate custom datasets to train models capable of analyzing leaf imagery for disease classification, yield prediction, and automated quality control.</p>
+        </div>
+    </section>
+
+    <!-- 3. App Showcase Section -->
+    <section class="app-section" id="app">
+        <div class="app-text">
+            <h2>Instant Crop Disease Detection</h2>
+            <p>Diagnose crop health in seconds. Our flagship mobile application analyzes leaf imagery in real-time to identify blights, mildews, and bacterial infections before they spread across your harvest.</p>
+            <ul class="app-features">
+                <li><strong>On-Device Inference:</strong> Powered by lightweight YOLO models and TFLite for lightning-fast analysis—no active internet connection required.</li>
+                <li><strong>High Accuracy Screening:</strong> Extensively trained on localized datasets to catch diseases like Alternaria, Powdery Mildew, and Bacterial Wilt.</li>
+                <li><strong>Accessible UI:</strong> An intuitive, multi-language interface built to be operated seamlessly directly in the field.</li>
+            </ul>
+            <a href="#download" class="download-btn">Explore App Features</a>
+        </div>
+        
+        <div class="app-visual">
+            <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <div class="mock-header">Image Scanner</div>
+                    <div class="mock-camera-view">
+                        <div class="mock-leaf"></div>
+                        <div class="bounding-box"></div>
+                    </div>
+                    <div class="mock-result">
+                        <strong>Diagnosis Complete:</strong><br>Alternaria Detected<br><span style="font-size: 0.85rem; color: #7f0000;">Confidence: 99.5%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Krishi Prakriti. Cultivating Technology.</p>
+    </footer>
+
+    <script>
+        // --- Slider Logic ---
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        let slideTimer;
+        
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Loop array appropriately (works for negative numbers too)
+            slideIndex = (n + slides.length) % slides.length; 
+            
+            slides[slideIndex].classList.add('active');
+            dots[slideIndex].classList.add('active');
+        }
+
+        function currentSlide(n) {
+            showSlide(n);
+            resetTimer();
+        }
+
+        // Handles Next and Prev button clicks
+        function changeSlide(step) {
+            showSlide(slideIndex + step);
+            resetTimer();
+        }
+
+        // Called automatically by the interval
+        function autoNextSlide() {
+            showSlide(slideIndex + 1);
+        }
+
+        function startTimer() {
+            slideTimer = setInterval(autoNextSlide, 5000); // 5 seconds per slide
+        }
+
+        function resetTimer() {
+            clearInterval(slideTimer);
+            startTimer();
+        }
+
+        // Initialize slider
+        startTimer();
+
+        // --- Tabs Logic ---
+        function openTab(evt, tabId) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            
+            // Hide all tab contents and remove active class from buttons
+            tabContents.forEach(content => content.classList.remove('active'));
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            
+            // Show the targeted tab and set the clicked button to active
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
