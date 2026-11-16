@@ -136,6 +136,13 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
         }
+        
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
@@ -172,8 +179,8 @@
         <div class="contact-form-wrapper">
             <h2>Send us a Message</h2>
             
-            <!-- Replace "YOUR_ENDPOINT_HERE" with your server URL or Formspree link -->
-            <form action="/submit-contact" method="POST">
+            <!-- Added ID for JavaScript targeting -->
+            <form id="krishiContactForm">
                 
                 <div class="form-row">
                     <div class="form-group">
@@ -235,5 +242,57 @@
         <p>© 2026 Krishi Prakriti. All rights reserved.</p>
     </footer>
 
+    <!-- Form Submission Script -->
+    <script>
+        document.getElementById('krishiContactForm').addEventListener('submit', async function(e) {
+            e.preventDefault(); // Prevent standard browser submission
+
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.innerText;
+            
+            // UI feedback while sending
+            submitBtn.innerText = 'Submitting...';
+            submitBtn.disabled = true;
+
+            // Collect all form data
+            const formData = {
+                purpose: document.getElementById('purpose').value,
+                service: document.getElementById('service').value,
+                name: document.getElementById('name').value,
+                company: document.getElementById('company').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                message: document.getElementById('message').value
+            };
+
+            try {
+                // Send to Vercel Serverless Function
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                // Assuming your backend responds with { success: true }
+                const result = await response.json();
+
+                if (result.success) {
+                    // Redirect to the confirmation page you built previously
+                    window.location.href = 'success.html'; 
+                } else {
+                    alert("Something went wrong on the server. Please try again.");
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error("Submission Error:", error);
+                alert("Network error. Please check your connection and try again.");
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
 </body>
 </html>
