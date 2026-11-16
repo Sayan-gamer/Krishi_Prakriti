@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Post-Harvest Technology - KRISHI PRAKRITI</title>
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --accent-blue: #0277bd;
+            --tech-dark: #263238;
+            --light-bg: #f5f9f6;
+            --card-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            --layer-1: #e1f5fe;
+            --layer-2: #b3e5fc;
+            --layer-3: #81d4fa;
+            --layer-4: #4fc3f7;
+        }
+
+        p {
+            text-align: justify;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        
+        header {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-bottom: 4px solid var(--water-blue);
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            /* Add your image path here. The linear-gradient creates a readable overlay */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.20), rgba(249, 251, 249, 0.80)), url('iot/ioit.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        
+
+        header p {
+            color: #17561A;
+            font-size: 1.2rem;
+            font-weight: 500;
+			text-align: center;
+			
+        }
+        
+       
+
+        /* Intro Section */
+        .intro-section {
+            background: white;
+            padding: 1rem;
+            border-radius: 0 0 12px 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            color: #555;
+            border-bottom: 4px solid var(--accent-blue);
+        }
+
+        .intro-section p {
+            margin-bottom: 0.85rem;
+        }
+
+        .intro-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Services Section */
+        .section-title {
+            text-align: center;
+            color: var(--tech-dark);
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background-color: var(--primary-green);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 4rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            border-top: 4px solid var(--primary-green);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            color: var(--primary-green);
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+        }
+
+        .service-card p {
+            color: #555;
+            font-size: 1rem;
+        }
+
+        /* Architecture Section */
+        .architecture-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 3rem;
+        }
+
+        .architecture-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #444;
+        }
+
+        .layers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .layer-box {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 6px solid var(--accent-blue);
+            background: var(--layer-1);
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .layer-box:nth-child(1) { background: var(--layer-1); border-color: #0277bd; }
+        .layer-box:nth-child(2) { background: var(--layer-2); border-color: #0288d1; }
+        .layer-box:nth-child(3) { background: var(--layer-3); border-color: #039be5; }
+        .layer-box:nth-child(4) { background: var(--layer-4); border-color: #03a9f4; }
+
+        .layer-title {
+            flex: 0 0 200px;
+            font-weight: bold;
+            color: var(--tech-dark);
+            font-size: 1.15rem;
+            text-align: center;
+        }
+
+        .layer-desc {
+            flex: 1;
+            color: #333;
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 768px) {
+            .layer-box {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .layer-title {
+                flex: none;
+                border-bottom: 2px solid rgba(0,0,0,0.1);
+                padding-bottom: 5px;
+                width: 100%;
+            }
+        }
+        
+        /* Fixed Image CSS */
+       img {
+            max-width: 95%; /* Ensures it doesn't break on small mobile screens */
+            width: 500px;    /* Sets the target width */
+            max-height: 300px;
+            height: auto;
+            display: block;
+            margin: 15px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Replaced undefined variable */
+            transition: transform 0.3s ease;
+        }
+        
+     
+        
+        img:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Buttons */
+        .book-now-btn {
+            display: table;
+            margin: 30px auto 0;
+            background-color: var(--primary-green);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .book-now-btn:hover {
+            background-color: var(--tech-dark);
+            transform: translateY(-2px);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <h1>IoT-Enabled Post-Harvest Technology</h1>
+            <p>Smart Produce Monitoring & Management</p>
+        </header>
+
+        <section class="intro-section">
+            <p><strong>KRISHI PRAKRITI</strong> promotes intelligent post-harvest management through IoT-enabled sensing technologies and digital monitoring solutions. We integrate smart sensors, real-time data acquisition, and remote monitoring systems to track critical storage parameters such as temperature, relative humidity, moisture content, and environmental conditions of agricultural produce.</p>
+            <a href="#" class="book-now-btn">Book Service</a>
+        </section>
+
+        <h2 class="section-title">Our Services</h2>
+        
+        <!-- Fixed missing services-grid wrapper -->
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Real-Time Quality Monitoring</h3>
+                <p>IoT-based sensors for continuous monitoring of temperature, humidity, moisture, and storage conditions.</p>
+            </div>
+            
+            <div class="service-card">
+                <h3>Smart Storage Management</h3>
+                <p>Automated alerts, remote monitoring, and data-driven control of storage environments.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>Post-Harvest Loss Reduction</h3>
+                <p>Early detection of unfavourable storage conditions to minimise spoilage and preserve produce quality.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>Digital Monitoring & Analytics</h3>
+                <p>Sensor-based data acquisition, historical trend analysis, and intelligent decision support.</p>
+            </div>
+        </div>
+            
+        <img src="iot/iot1.webp" alt="IoT Service Overview">
+
+        <section class="architecture-section">
+            <h2 class="section-title">System Architecture</h2>
+            <p class="architecture-intro">The Real Time Anomaly Detection (RTAD) system follows a 4-layer IoT architecture designed for robust and scalable monitoring:</p>
+            
+            <div class="layers-container">
+                <div class="layer-box">
+                    <div class="layer-title">1. Perception Layer</div>
+                </div>
+
+                <div class="layer-box">
+                    <div class="layer-title">2. Network Layer</div>
+                </div>
+
+                <div class="layer-box">
+                    <div class="layer-title">3. Processing Layer</div>
+                </div>
+
+                <div class="layer-box">
+                    <div class="layer-title">4. Application Layer</div>
+                </div>
+            </div>
+            
+
+        </section>
+
+    </div>
+            <img src="iot/iot2.webp" alt="Architecture Diagram 1">
+            <img src="iot/iot3.webp" alt="Architecture Diagram 2">
+</body>
+</html>

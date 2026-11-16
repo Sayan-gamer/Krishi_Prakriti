@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agricultural Waste Management - KRISHI PRAKRITI</title>
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --light-green: #e8f5e9;
+            --dark-green: #1b5e20;
+            --accent-earth: #8d6e63;
+            --bg-color: #f4f7f4;
+            --text-dark: #2c3e50;
+            --text-muted: #546e7a;
+            --card-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        header {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-bottom: 4px solid var(--water-blue);
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            /* Add your image path here. The linear-gradient creates a readable overlay */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.20), rgba(249, 251, 249, 0.80)), url('waste/back.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        
+     img {
+        max-width: 500px;
+    height: auto;
+    display: block;  /* Forces the image to behave like a block element */
+    margin: 0 auto;  /* Centers the block by applying equal left and right margins */
+    border-radius: 4px;
+}
+
+        
+        p, span {
+            text-align: justify;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Hero Header */
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        header .subtitle {
+            color: #381E1E;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Intro Section */
+        .intro-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 3rem;
+            border-bottom: 5px solid var(--accent-earth);
+        }
+
+        .intro-section p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            color: var(--dark-green);
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 4px;
+            background-color: var(--accent-earth);
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Capabilities Grid */
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 4rem;
+        }
+
+        .capability-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            border-left: 5px solid var(--primary-green);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .capability-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        /* SINGLE Image styles for the capability cards */
+        .capability-card > img {
+            width: 100%;
+            height: 95%;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* MULTIPLE Images Grid styles for cards with clustered images */
+        .multi-img-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .multi-img-grid img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .capability-card h3 {
+            color: var(--primary-green);
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .capability-card p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Impact & Sustainability Section */
+        .impact-section {
+            background: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 4rem;
+        }
+
+        .impact-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .impact-list li {
+            background: var(--light-green);
+            padding: 1.5rem ;
+            border-radius: 8px;
+            border: 1px solid #c8e6c9;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .impact-list li strong {
+            color: var(--dark-green);
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .impact-list li span {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Image sizing specifically for the impact list item */
+        .impact-list li img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Vision Section */
+        .vision-section {
+            background: linear-gradient(135deg, var(--accent-earth) 0%, #5d4037 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .vision-section::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 150px;
+            color: rgba(255,255,255,0.1);
+            font-family: serif;
+        }
+
+        .vision-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #d7ccc8;
+        }
+
+        .vision-section p {
+            font-size: 1.25rem;
+            font-style: italic;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .book-now-btn {
+            display: table; 
+            margin: 20px auto 0; 
+            background-color: green;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .book-now-btn:hover {
+            background-color: gray;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .impact-list {
+                grid-template-columns: 1fr;
+            }
+            .intro-section {
+                padding: 2rem;
+            }
+            .capability-card > img {
+                height: 200px; 
+            }
+            .multi-img-grid img {
+                height: 180px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <h1>Integrated Agricultural Waste Management</h1>
+            <h5 class="subtitle">Environmental Sustainability & Bio-Based Resource Utilisation</h5>
+        </header>
+
+        <section class="intro-section">
+            <p>We promote a resource-efficient, circular agricultural ecosystem that converts post-harvest biomass into value-added materials for agriculture, livestock, packaging, nursery applications, and renewable energy industries. Through mechanisation, decentralised processing infrastructure, and market-linked supply chains, we aim to improve residue utilisation while generating additional income opportunities for farmers, rural entrepreneurs, and women-led self-help groups (SHGs).</p>
+            <a href="#" class="book-now-btn">Book Service</a>
+        </section>
+
+        <h2 class="section-title">Service Area</h2>
+        
+        <section class="capabilities-grid">
+            <div class="capability-card">
+                <h3>Mechanised Crop Residue Recovery</h3>
+                <p>Efficient collection, baling, chopping, and aggregation of paddy straw and other agricultural residues.</p>
+                <img src="waste/1.webp" alt="Mechanised Crop Residue Recovery">
+            </div>
+            
+            <div class="capability-card">
+                <h3>Biomass Processing & Valorisation</h3>
+                <p>Conversion of agricultural waste into chopped biomass, straw powder, fibre, and other value-added raw materials.</p>
+                <img src="waste/2.webp" alt="Biomass Processing & Valorisation">
+            </div>
+            
+            <div class="capability-card">
+                <h3>Bio-Based Product Development</h3>
+                <p>Development of straw-based nursery growing media, poultry bedding, fibre-based packaging, paper, cardboard, and artisan products.</p>
+                <img src="waste/3.webp" alt="Bio-Based Product Development">
+            </div>
+            
+            <div class="capability-card">
+                <h3>Circular Bioeconomy Solutions</h3>
+                <p>Establishment of resource recovery and utilisation pathways that transform agricultural waste into commercially valuable products.</p>
+                <!-- Clustered Images wrapped in a grid -->
+                
+                    
+                    
+                    <img src="waste/4.webp" alt="Circular Bioeconomy Solutions">
+                
+            </div>
+            
+            <div class="capability-card">
+                <h3>Biomass Supply Chain Management</h3>
+                <p>Development of decentralised collection, storage, transportation, processing, and buyer-linkage networks.</p>
+            </div>
+            
+            <div class="capability-card">
+                <h3>Renewable Energy Applications</h3>
+                <p>Exploring agricultural biomass utilisation for biogas and other bioenergy applications, subject to technical and economic feasibility.</p>
+            </div>
+            
+            <div class="capability-card">
+                <h3>Rural Enterprise & Women Empowerment</h3>
+                <p>Promoting SHG-led biomass processing, mushroom cultivation, handmade paper, and other village-level enterprises.</p>
+            <img src="waste/5.webp" alt="Rural Enterprise & Women Empowerment">
+            </div>
+            
+
+            <div class="capability-card">
+                <h3>Livestock Fodder Solutions</h3>
+                <p>Processing crop residues into nutrient-rich, easily digestible animal feed to support local livestock farming ecosystems.</p>
+            </div>
+            
+            
+        </section>
+
+        <section class="impact-section">
+            <h2 class="section-title">Environmental Impact & Sustainability</h2>
+            <ul class="impact-list">
+                <li>
+                    <strong>Reduction in Open-Field Burning</strong>
+                    <span>Promoting alternative residue management pathways to minimise crop-residue burning and associated air pollution.</span>
+                    <img src="waste/6.webp" alt="Reduction in Open-Field Burning">
+                </li>
+                
+                <li>
+                    <strong>Climate Change Mitigation</strong>
+                    <span>Supporting lower-emission agricultural practices and exploring biomass utilisation pathways that can contribute to greenhouse gas emission reduction.</span>
+                </li>
+                <li>
+                    <strong>Resource Conservation</strong>
+                    <span>Encouraging efficient utilisation of agricultural biomass, reducing waste generation, and promoting responsible resource management.</span>
+                </li>
+                <li>
+                    <strong>Soil Health Protection</strong>
+                    <span>Promoting appropriate residue management practices that support soil organic matter conservation and long-term soil sustainability.</span>
+                </li>
+                <li>
+                    <strong>Pollution Prevention</strong>
+                    <span>Reducing uncontrolled biomass disposal and associated environmental contamination through organised collection and processing.</span>
+                </li>
+                <li>
+                    <strong>Circular Resource Utilisation</strong>
+                    <span>Replacing selected conventional raw materials with agricultural residue-based alternatives wherever technically and commercially feasible.</span>
+                </li>
+                <li>
+                    <strong>Sustainable Rural Development</strong>
+                    <span>Creating decentralised value chains that combine environmental protection, additional farmer income, local employment, and inclusive economic growth.</span>
+                </li>
+            </ul>
+        </section>
+
+        <section class="vision-section">
+            <h2>Our Vision</h2>
+            <p>To establish an integrated agricultural circular economy where crop residues are transformed from an environmental burden into valuable economic resources. We aim to accelerate the transition towards low-waste, resource-efficient, climate-resilient agriculture while reducing environmental pollution, strengthening rural livelihoods, and creating sustainable bio-based industries.</p>
+        </section>
+
+    </div>
+
+</body>
+</html>
