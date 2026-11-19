@@ -20,6 +20,12 @@ export default async function handler(req, res) {
   });
 
   try {
+	  
+	  console.log('ENV CHECK:', {
+  hasUser: Boolean(process.env.EMAIL_USER),
+  userValue: process.env.EMAIL_USER,
+  passLength: process.env.EMAIL_PASS?.length,
+});
     // 1. Email sent to your inbox (Reply-To goes directly to the visitor)
     await transporter.sendMail({
       from: `"Krishi Prakriti Website" <${process.env.EMAIL_USER}>`,
