@@ -1,32 +1,66 @@
-export default async function handler(req, res) {
-    // Only allow POST requests
-    if (req.method === 'POST') {
-        try {
-            // Destructure the exact fields sent from your updated contact.html
-            const { purpose, service, name, company, email, phone, message } = req.body;
-            
-            // Replicate your Express console logs
-            console.log("New Submission from:", name);
-            console.log("They want to:", purpose);
-            console.log("Service:", service);
-            console.log("Company:", company);
-            console.log("Email:", email);
-            console.log("Phone:", phone);
-            console.log("Message:", message);
-            
-            // Here you would use Nodemailer or Resend to email yourself, 
-            // or insert the data into a database like Vercel Postgres/MongoDB.
-            
-            // Tell the frontend the submission was successful so it can redirect
-            return res.status(200).json({ success: true });
+import nodemailer from 'nodemailer';
 
-        } catch (error) {
-            console.error("Server error:", error);
-            return res.status(500).json({ success: false, error: "Server error" });
-        }
-    } else {
-        // Reject GET requests
-        res.setHeader('Allow', ['POST']);
-        return res.status(405).end(`Method ${req.method} Not Allowed`);
-    }
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false, error: 'Method not allowed' });
+  }
+
+  const { purpose, service, name, company, email, phone, message } = req.body;
+
+  if (!purpose || !name || !email || !phone || !message) {
+    return res.status(400).json({ success: false, error: 'Please fill in all required fields.' });
+  }
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  try {
+    // 1. Email sent to your inbox (Reply-To goes directly to the visitor)
+    await transporter.sendMail({
+      from: `"Krishi Prakriti Website" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
+      replyTo: email,
+      subject: `[${purpose}] New Inquiry from ${name}`,
+      text: [
+        `Purpose: ${purpose}`,
+        `Service: ${service || 'None'}`,
+        `Name: ${name}`,
+        `Company/Org: ${company || 'N/A'}`,
+        `Email: ${email}`,
+        `Phone: ${phone}`,
+        ``,
+        `Message:`,
+        message,
+      ].join('\n'),
+    });
+
+    // 2. Confirmation email sent to the email address the person provided
+    await transporter.sendMail({
+      from: `"Krishi Prakriti" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: 'We received your inquiry - Krishi Prakriti',
+      text: [
+        `Hi ${name},`,
+        ``,
+        `Thank you for contacting Krishi Prakriti. We have received your inquiry regarding "${purpose}" and will get back to you shortly.`,
+        ``,
+        `Summary of your request:`,
+        `Service: ${service || 'Not Applicable'}`,
+        `Message: ${message}`,
+        ``,
+        `Best regards,`,
+        `Team Krishi Prakriti`,
+      ].join('\n'),
+    });
+
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    console.error('Email sending failed:', error);
+    return res.status(500).json({ success: false, error: 'Failed to send email. Please try again later.' });
+  }
 }

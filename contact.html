@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - Krishi Prakriti</title>
     <style>
-        /* Base & Reset (Matching your main theme) */
+        /* Base & Reset */
         :root {
             --primary: #2e7d32; 
             --primary-light: #60ad5e;
@@ -150,7 +150,7 @@
             .form-group { margin-bottom: 1.5rem; }
         }
 
-        /* Footer (Minimal version to match your existing one) */
+        /* Footer */
         .site-footer { background: #111; color: #ddd; padding: 2rem 5%; text-align: center; margin-top: auto; }
     </style>
 </head>
@@ -179,9 +179,7 @@
         <div class="contact-form-wrapper">
             <h2>Send us a Message</h2>
             
-            <!-- Added ID for JavaScript targeting -->
             <form id="krishiContactForm">
-                
                 <div class="form-row">
                     <div class="form-group">
                         <label for="purpose">Purpose of Inquiry *</label>
@@ -211,7 +209,7 @@
                         <input type="text" id="name" name="name" placeholder="Enter your full name" required>
                     </div>
                     <div class="form-group">
-                        <label for="company">Company / organization Name (Optional)</label>
+                        <label for="company">Company / Organization Name (Optional)</label>
                         <input type="text" id="company" name="company" placeholder="Enter your organization name">
                     </div>
                 </div>
@@ -245,44 +243,37 @@
     <!-- Form Submission Script -->
     <script>
         document.getElementById('krishiContactForm').addEventListener('submit', async function(e) {
-            e.preventDefault(); // Prevent standard browser submission
+            e.preventDefault();
 
             const submitBtn = this.querySelector('.submit-btn');
             const originalText = submitBtn.innerText;
             
-            // UI feedback while sending
             submitBtn.innerText = 'Submitting...';
             submitBtn.disabled = true;
 
-            // Collect all form data
             const formData = {
                 purpose: document.getElementById('purpose').value,
                 service: document.getElementById('service').value,
-                name: document.getElementById('name').value,
-                company: document.getElementById('company').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                message: document.getElementById('message').value
+                name: document.getElementById('name').value.trim(),
+                company: document.getElementById('company').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                message: document.getElementById('message').value.trim()
             };
 
             try {
-                // Send to Vercel Serverless Function
                 const response = await fetch('/api/contact', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
                 });
 
-                // Assuming your backend responds with { success: true }
-                const result = await response.json();
+                const result = await response.json().catch(() => ({}));
 
-                if (result.success) {
-                    // Redirect to the confirmation page you built previously
-                    window.location.href = 'success.html'; 
+                if (response.ok && result.success) {
+                    window.location.href = 'success.html';
                 } else {
-                    alert("Something went wrong on the server. Please try again.");
+                    alert(result.error || "Something went wrong on the server. Please try again.");
                     submitBtn.innerText = originalText;
                     submitBtn.disabled = false;
                 }
