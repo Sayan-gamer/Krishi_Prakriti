@@ -9,6 +9,13 @@ export default async function handler(req, res) {
 
   const { purpose, service, name, company, email, phone, message } = req.body;
 
+const recipientEmail = (process.env.CONTACT_EMAIL || process.env.EMAIL_USER || '').trim();
+
+if (!recipientEmail) {
+  console.error('Missing CONTACT_EMAIL environment variable');
+  return res.status(500).json({ success: false, error: 'Server email configuration is missing.' });
+}
+
   if (!purpose || !name || !email || !phone || !message) {
     return res.status(400).json({ success: false, error: 'Please fill in all required fields.' });
   }
@@ -16,11 +23,11 @@ export default async function handler(req, res) {
   try {
     // 1. Email sent to your inbox (Reply-To goes directly to the visitor)
     const { error: adminError } = await resend.emails.send({
-      from: 'Krishi Prakriti Website <onboarding@resend.dev>',
-      to: [process.env.CONTACT_EMAIL],
-      replyTo: email,
-      subject: `[${purpose}] New Inquiry from ${name}`,
-      text: [
+  from: 'Krishi Prakriti Website <onboarding@resend.dev>',
+  to: [recipientEmail],
+  replyTo: email.trim(),
+  subject: `[${purpose}] New Inquiry from ${name}`,
+    text: [
         `Purpose: ${purpose}`,
         `Service: ${service || 'None'}`,
         `Name: ${name}`,
